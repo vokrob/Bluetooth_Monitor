@@ -2,9 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="BtEnable"
-        android:icon="@drawable/ic_bt_enable"
+    <item
         android:id="@+id/id_bt_button"
-        app:showAsAction="ifRoom"
-        />
+        android:icon="@drawable/ic_bt_enable"
+        android:orderInCategory="100"
+        android:title="BtEnable"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/id_menu"
+        android:icon="@drawable/ic_menu"
+        android:orderInCategory="200"
+        android:title="BtList"
+        app:showAsAction="ifRoom" />
+
 </menu>
