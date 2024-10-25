@@ -16,9 +16,11 @@ import com.vokrob.bluetooth_monitor.R;
 import java.util.List;
 
 public class BtAdapter extends ArrayAdapter<ListItem> {
+    private List<ListItem> mainList;
 
     public BtAdapter(@NonNull Context context, int resource, List<ListItem> btList) {
         super(context, resource, btList);
+        mainList = btList;
     }
 
     @NonNull
@@ -37,13 +39,13 @@ public class BtAdapter extends ArrayAdapter<ListItem> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.tvBtName.setText("vokrob");
-        viewHolder.chBtSelected.setChecked(true);
+        viewHolder.tvBtName.setText(mainList.get(position).getBtName());
+        // viewHolder.chBtSelected.setChecked(true);
 
-        return super.getView(position, convertView, parent);
+        return convertView;
     }
 
-    class ViewHolder {
+    static class ViewHolder {
         TextView tvBtName;
         CheckBox chBtSelected;
     }

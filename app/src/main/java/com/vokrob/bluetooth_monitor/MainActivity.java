@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        // init();
+        init();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         menuItem = menu.findItem(R.id.id_bt_button);
-        //setBtIcon();
+        setBtIcon();
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -55,8 +56,12 @@ public class MainActivity extends AppCompatActivity {
                 menuItem.setIcon(R.drawable.ic_bt_enable);
             }
         } else if (item.getItemId() == R.id.id_menu) {
-            Intent i = new Intent(MainActivity.this, BtListActivity.class);
-            startActivity(i);
+            if (btAdapter.isEnabled()) {
+                Intent i = new Intent(MainActivity.this, BtListActivity.class);
+                startActivity(i);
+            } else {
+                Toast.makeText(this, R.string.switch_on_bluetooth, Toast.LENGTH_SHORT).show();
+            }
         }
 
         return super.onOptionsItemSelected(item);
