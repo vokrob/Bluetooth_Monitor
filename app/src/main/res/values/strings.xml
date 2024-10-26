@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Bluetooth_Monitor</string>
     <string name="switch_on_bluetooth">Включите Bluetooth</string>
+    <string name="title_item_name">Найденные устройства:</string>
 </resources>

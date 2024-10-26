@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BtAdapter extends ArrayAdapter<ListItem> {
+    public static final String DEF_ITEM_TYPE = "default";
+    public static final String TITLE_ITEM_TYPE = "title";
+    public static final String DISCOVERY_ITEM_TYPE = "discovery";
     private List<ListItem> mainList;
     private List<ViewHolder> listViewHolders;
     private SharedPreferences pref;
@@ -32,6 +35,29 @@ public class BtAdapter extends ArrayAdapter<ListItem> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        switch (mainList.get(position).getItemType()) {
+            case TITLE_ITEM_TYPE:
+                convertView = titleItem(convertView, parent);
+                break;
+            default:
+                convertView = defaultItem(convertView, position, parent);
+                break;
+        }
+        return convertView;
+    }
+
+    private void savePref(int pos) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(BtConsts.MAC_KEY, mainList.get(pos).getBtMac());
+        editor.apply();
+    }
+
+    static class ViewHolder {
+        TextView tvBtName;
+        CheckBox chBtSelected;
+    }
+
+    private View defaultItem(View convertView, int position, ViewGroup parent) {
         ViewHolder viewHolder;
 
         if (convertView == null) {
@@ -50,6 +76,7 @@ public class BtAdapter extends ArrayAdapter<ListItem> {
 
         viewHolder.tvBtName.setText(mainList.get(position).getBtName());
         viewHolder.chBtSelected.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 for (ViewHolder holder : listViewHolders) {
@@ -59,22 +86,23 @@ public class BtAdapter extends ArrayAdapter<ListItem> {
                 savePref(position);
             }
         });
+
         if (pref.getString(BtConsts.MAC_KEY, "no bt selected").equals(mainList.get(position).getBtMac())) {
             viewHolder.chBtSelected.setChecked(true);
         }
 
+        // viewHolder.chBtSelected.setChecked(true);
+
         return convertView;
     }
 
-    private void savePref(int pos) {
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString(BtConsts.MAC_KEY, mainList.get(pos).getBtMac());
-        editor.apply();
-    }
+    private View titleItem(View convertView, ViewGroup parent) {
 
-    static class ViewHolder {
-        TextView tvBtName;
-        CheckBox chBtSelected;
+        if (convertView == null) {
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.bt_list_item_title, null,
+                    false);
+        }
+        return convertView;
     }
 }
 
