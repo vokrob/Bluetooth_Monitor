@@ -2,7 +2,9 @@ package com.vokrob.bluetooth_monitor;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,10 +18,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.vokrob.bluetooth_monitor.adapter.BtConsts;
+
 public class MainActivity extends AppCompatActivity {
     private MenuItem menuItem;
     private BluetoothAdapter btAdapter;
     private final int ENABLE_REQUEST = 15;
+    private SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         btAdapter = BluetoothAdapter.getDefaultAdapter();
+        pref = getSharedPreferences(BtConsts.MY_PREF, Context.MODE_PRIVATE);
     }
 
     @SuppressLint("MissingPermission")
