@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Bluetooth_Monitor</string>
     <string name="switch_on_bluetooth">Включите Bluetooth</string>
-    <string name="title_item_name">Найденные устройства:</string>
+    <string name="title_item_name">Доступные устройства:</string>
+    <string name="no_permission_to_search_for_devices">Нет разрешения на поиск устройств</string>
+    <string name="permission_to_search_for_devices_has_been_granted">Получено разрешение на поиск устройств</string>
+    <string name="available_device">Доступно устройство :</string>
 </resources>
