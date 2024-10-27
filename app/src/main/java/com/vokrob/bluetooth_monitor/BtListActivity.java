@@ -12,6 +12,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -108,6 +110,21 @@ public class BtListActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         getPairedDevices();
+
+        onItemClickListener();
+    }
+
+    private void onItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @SuppressLint("MissingPermission")
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ListItem item = (ListItem) parent.getItemAtPosition(position);
+                if (item.getItemType().equals(BtAdapter.DISCOVERY_ITEM_TYPE)) {
+                    item.getBtDevice().createBond();
+                }
+            }
+        });
     }
 
     @SuppressLint("MissingPermission")
@@ -119,8 +136,7 @@ public class BtListActivity extends AppCompatActivity {
             for (BluetoothDevice device : pairedDevices) {
                 @SuppressLint("MissingPermission")
                 ListItem item = new ListItem();
-                item.setBtName(device.getName());
-                item.setBtMac(device.getAddress());
+                item.setBtDevice(device);
                 list.add(item);
             }
             adapter.notifyDataSetChanged();
@@ -158,7 +174,12 @@ public class BtListActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if (BluetoothDevice.ACTION_FOUND.equals(intent.getAction())) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                Toast.makeText(context, R.string.available_device + device.getName(), Toast.LENGTH_SHORT).show();
+                ListItem item = new ListItem();
+                item.setBtDevice(device);
+                item.setItemType(BtAdapter.DISCOVERY_ITEM_TYPE);
+                list.add(item);
+                adapter.notifyDataSetChanged();
+                // Toast.makeText(context, R.string.available_device + device.getName(), Toast.LENGTH_SHORT).show();
             }
         }
     };

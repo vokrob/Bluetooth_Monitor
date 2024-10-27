@@ -1,24 +1,17 @@
 package com.vokrob.bluetooth_monitor.adapter;
 
+import android.bluetooth.BluetoothDevice;
+
 public class ListItem {
-    private String btName;
-    private String btMac;
+    private BluetoothDevice btDevice;
     private String itemType = BtAdapter.DEF_ITEM_TYPE;
 
-    public String getBtName() {
-        return btName;
+    public BluetoothDevice getBtDevice() {
+        return btDevice;
     }
 
-    public void setBtName(String btName) {
-        this.btName = btName;
-    }
-
-    public String getBtMac() {
-        return btMac;
-    }
-
-    public void setBtMac(String btMac) {
-        this.btMac = btMac;
+    public void setBtDevice(BluetoothDevice btDevice) {
+        this.btDevice = btDevice;
     }
 
     public String getItemType() {

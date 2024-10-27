@@ -1,5 +1,6 @@
 package com.vokrob.bluetooth_monitor.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
@@ -48,7 +49,7 @@ public class BtAdapter extends ArrayAdapter<ListItem> {
 
     private void savePref(int pos) {
         SharedPreferences.Editor editor = pref.edit();
-        editor.putString(BtConsts.MAC_KEY, mainList.get(pos).getBtMac());
+        editor.putString(BtConsts.MAC_KEY, mainList.get(pos).getBtDevice().getAddress());
         editor.apply();
     }
 
@@ -57,6 +58,7 @@ public class BtAdapter extends ArrayAdapter<ListItem> {
         CheckBox chBtSelected;
     }
 
+    @SuppressLint("MissingPermission")
     private View defaultItem(View convertView, int position, ViewGroup parent) {
         ViewHolder viewHolder;
 
@@ -74,20 +76,17 @@ public class BtAdapter extends ArrayAdapter<ListItem> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.tvBtName.setText(mainList.get(position).getBtName());
-        viewHolder.chBtSelected.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                for (ViewHolder holder : listViewHolders) {
-                    holder.chBtSelected.setChecked(false);
-                }
-                viewHolder.chBtSelected.setChecked(true);
-                savePref(position);
+        viewHolder.tvBtName.setText(mainList.get(position).getBtDevice().getName());
+        viewHolder.chBtSelected.setOnClickListener(view -> {
+            for (ViewHolder holder : listViewHolders) {
+                holder.chBtSelected.setChecked(false);
             }
+            viewHolder.chBtSelected.setChecked(true);
+            savePref(position);
         });
 
-        if (pref.getString(BtConsts.MAC_KEY, "no bt selected").equals(mainList.get(position).getBtMac())) {
+        if (pref.getString(BtConsts.MAC_KEY, "no bt selected").equals(mainList.get(position)
+                .getBtDevice().getAddress())) {
             viewHolder.chBtSelected.setChecked(true);
         }
 
