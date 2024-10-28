@@ -61,8 +61,11 @@ public class BtAdapter extends ArrayAdapter<ListItem> {
     @SuppressLint("MissingPermission")
     private View defaultItem(View convertView, int position, ViewGroup parent) {
         ViewHolder viewHolder;
+        boolean hasViewHolder = false;
 
-        if (convertView == null) {
+        if (convertView != null) hasViewHolder = (convertView.getTag() instanceof ViewHolder);
+
+        if (convertView == null || !hasViewHolder) {
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.bt_list_item, null,
                     false);
@@ -96,8 +99,11 @@ public class BtAdapter extends ArrayAdapter<ListItem> {
     }
 
     private View titleItem(View convertView, ViewGroup parent) {
+        boolean hasViewHolder = false;
 
-        if (convertView == null) {
+        if (convertView != null) hasViewHolder = (convertView.getTag() instanceof ViewHolder);
+
+        if (convertView == null || hasViewHolder) {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.bt_list_item_title, null,
                     false);
         }

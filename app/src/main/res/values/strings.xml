@@ -5,4 +5,33 @@
     <string name="no_permission_to_search_for_devices">Нет разрешения на поиск устройств</string>
     <string name="permission_to_search_for_devices_has_been_granted">Получено разрешение на поиск устройств</string>
     <string name="available_device">Доступно устройство :</string>
+    <string name="discovering">Поиск…</string>
 </resources>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
