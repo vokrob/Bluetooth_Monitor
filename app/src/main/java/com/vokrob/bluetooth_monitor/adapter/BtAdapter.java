@@ -25,6 +25,7 @@ public class BtAdapter extends ArrayAdapter<ListItem> {
     private List<ListItem> mainList;
     private List<ViewHolder> listViewHolders;
     private SharedPreferences pref;
+    private boolean isDiscoveryType = false;
 
     public BtAdapter(@NonNull Context context, int resource, List<ListItem> btList) {
         super(context, resource, btList);
@@ -77,23 +78,34 @@ public class BtAdapter extends ArrayAdapter<ListItem> {
 
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder.chBtSelected.setChecked(false);
+        }
+
+        if (mainList.get(position).getItemType().equals(BtAdapter.DISCOVERY_ITEM_TYPE)) {
+            viewHolder.chBtSelected.setVisibility(View.GONE);
+            isDiscoveryType = true;
+        } else {
+            viewHolder.chBtSelected.setVisibility(View.VISIBLE);
+            isDiscoveryType = false;
         }
 
         viewHolder.tvBtName.setText(mainList.get(position).getBtDevice().getName());
-        viewHolder.chBtSelected.setOnClickListener(view -> {
-            for (ViewHolder holder : listViewHolders) {
-                holder.chBtSelected.setChecked(false);
+        viewHolder.chBtSelected.setOnClickListener(v -> {
+            if (!isDiscoveryType) {
+
+                for (ViewHolder holder : listViewHolders) {
+                    holder.chBtSelected.setChecked(false);
+                }
+                viewHolder.chBtSelected.setChecked(true);
+                savePref(position);
             }
-            viewHolder.chBtSelected.setChecked(true);
-            savePref(position);
         });
 
         if (pref.getString(BtConsts.MAC_KEY, "no bt selected").equals(mainList.get(position)
                 .getBtDevice().getAddress())) {
             viewHolder.chBtSelected.setChecked(true);
         }
-
-        // viewHolder.chBtSelected.setChecked(true);
+        isDiscoveryType = false;
 
         return convertView;
     }

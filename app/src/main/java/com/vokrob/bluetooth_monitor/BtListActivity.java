@@ -200,6 +200,12 @@ public class BtListActivity extends AppCompatActivity {
                 isDiscovery = false;
                 getPairedDevices();
                 ab.setTitle(R.string.app_name);
+            } else if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(intent.getAction())) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+                if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+                    getPairedDevices();
+                }
             }
         }
     };
