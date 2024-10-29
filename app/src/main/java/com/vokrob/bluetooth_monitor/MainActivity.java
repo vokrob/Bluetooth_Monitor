@@ -19,12 +19,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.vokrob.bluetooth_monitor.adapter.BtConsts;
+import com.vokrob.bluetooth_monitor.bluetooth.BtConnection;
 
 public class MainActivity extends AppCompatActivity {
     private MenuItem menuItem;
     private BluetoothAdapter btAdapter;
     private final int ENABLE_REQUEST = 15;
     private SharedPreferences pref;
+    private BtConnection btConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, R.string.switch_on_bluetooth, Toast.LENGTH_SHORT).show();
             }
+        } else if (item.getItemId() == R.id.id_connect) {
+            btConnection.connect();
         }
 
         return super.onOptionsItemSelected(item);
@@ -93,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         pref = getSharedPreferences(BtConsts.MY_PREF, Context.MODE_PRIVATE);
+        btConnection = new BtConnection(this);
     }
 
     @SuppressLint("MissingPermission")

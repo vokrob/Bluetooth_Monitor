@@ -3,16 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/id_connect"
+        android:icon="@drawable/ic_connection"
+        android:orderInCategory="100"
+        android:title="Connect"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/id_bt_button"
         android:icon="@drawable/ic_bt_enable"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         android:title="BtEnable"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/id_menu"
         android:icon="@drawable/ic_menu"
-        android:orderInCategory="200"
+        android:orderInCategory="300"
         android:title="BtList"
         app:showAsAction="ifRoom" />
 
