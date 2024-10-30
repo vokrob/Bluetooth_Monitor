@@ -28,7 +28,7 @@ public class BtConnection {
         device = btAdapter.getRemoteDevice(mac);
         if (device == null) return;
 
-        connectThread = new ConnectThread(context, btAdapter, device);
+        connectThread = new ConnectThread(btAdapter, device);
         connectThread.start();
     }
 }
