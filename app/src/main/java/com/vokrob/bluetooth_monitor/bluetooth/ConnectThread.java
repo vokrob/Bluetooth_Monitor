@@ -11,6 +11,7 @@ import java.io.IOException;
 public class ConnectThread extends Thread {
     private BluetoothAdapter btAdapter;
     private BluetoothSocket mSocket;
+    private ReceiveThread rThread;
 
     public static final String UUID = "00001101-0000-1000-8000-00805F9B34FB";
 
@@ -31,7 +32,8 @@ public class ConnectThread extends Thread {
 
         try {
             mSocket.connect();
-            new ReceiveThread(mSocket).start();
+            rThread = new ReceiveThread(mSocket);
+            rThread.start();
             Log.d("MyLog", "Connected");
         } catch (IOException e) {
             Log.d("MyLog", "Not connected");
@@ -44,6 +46,10 @@ public class ConnectThread extends Thread {
             mSocket.close();
         } catch (IOException y) {
         }
+    }
+
+    public ReceiveThread getRThread() {
+        return rThread;
     }
 }
 

@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -27,13 +28,23 @@ public class MainActivity extends AppCompatActivity {
     private final int ENABLE_REQUEST = 15;
     private SharedPreferences pref;
     private BtConnection btConnection;
+    private Button bA, bB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        bA = findViewById(R.id.buttonA);
+        bB = findViewById(R.id.buttonB);
         init();
+
+        bA.setOnClickListener(view -> {
+            btConnection.sendMessage("A");
+        });
+        bB.setOnClickListener(view -> {
+            btConnection.sendMessage("B");
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

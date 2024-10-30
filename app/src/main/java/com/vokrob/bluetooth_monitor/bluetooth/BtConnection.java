@@ -31,6 +31,10 @@ public class BtConnection {
         connectThread = new ConnectThread(btAdapter, device);
         connectThread.start();
     }
+
+    public void sendMessage(String message) {
+        connectThread.getRThread().sendMessage(message.getBytes());
+    }
 }
 
 

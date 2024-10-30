@@ -20,6 +20,10 @@ public class ReceiveThread extends Thread {
             inputS = socket.getInputStream();
         } catch (IOException e) {
         }
+        try {
+            outputS = socket.getOutputStream();
+        } catch (IOException e) {
+        }
     }
 
     @Override
@@ -34,6 +38,12 @@ public class ReceiveThread extends Thread {
             } catch (IOException e) {
                 break;
             }
+        }
+    }
+    public void sendMessage(byte[] byteArray) {
+        try {
+            outputS.write(byteArray);
+        } catch (IOException e) {
         }
     }
 }
